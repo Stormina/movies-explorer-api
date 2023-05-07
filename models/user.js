@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 const { isEmail } = require('validator');
+const bcrypt = require('bcryptjs');
+const NotFoundError = require('../errors/NotFoundError');
+const UnauthorizedError = require('../errors/UnauthorizedError');
+const { BAD_REQUEST_ERROR, NOT_FOUND_ERROR, UN_AUTH_ERROR } = require('../utils/constants');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -16,7 +20,7 @@ const userSchema = new mongoose.Schema({
       validator(link) {
         return isEmail(link);
       },
-      message: 'Переданы некорректные данные',
+      message: BAD_REQUEST_ERROR,
     },
   },
   password: {
@@ -25,5 +29,23 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
 });
+
+userSchema.statics.findUserByCredentials = function f(email, password) {
+  return this.findOne({ email }).select('+password')
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError(NOT_FOUND_ERROR);
+      }
+
+      return bcrypt.compare(password, user.password)
+        .then((matched) => {
+          if (!matched) {
+            throw new UnauthorizedError(UN_AUTH_ERROR);
+          }
+
+          return user;
+        });
+    });
+};
 
 module.exports = mongoose.model('user', userSchema);

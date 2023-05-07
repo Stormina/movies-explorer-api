@@ -1,12 +1,13 @@
 const { celebrate, Joi, CelebrateError } = require('celebrate');
 const validator = require('validator');
+const { UNCORRECT_URL_ERROR } = require('../utils/constants');
 
 const validate = (value) => {
   const result = validator.isURL(value);
   if (result) {
     return value;
   }
-  throw new CelebrateError('Некорректный адрес');
+  throw new CelebrateError(UNCORRECT_URL_ERROR);
 };
 
 module.exports.loginValidation = celebrate({
@@ -24,8 +25,14 @@ module.exports.userValidation = celebrate({
   }),
 });
 
-module.exports.idValidation = celebrate({
+module.exports.movieIdValidation = celebrate({
   body: Joi.object().keys({
+    _id: Joi.string().length(24).hex().required(),
+  }),
+});
+
+module.exports.userIdValidation = celebrate({
+  params: Joi.object().keys({
     _id: Joi.string().length(24).hex().required(),
   }),
 });
@@ -48,6 +55,7 @@ module.exports.movieValidation = celebrate({
     image: Joi.string().required().custom(validate),
     trailerLink: Joi.string().required().custom(validate),
     thumbnail: Joi.string().required().custom(validate),
+    /* movieId: Joi.number().required(), */
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
   }),

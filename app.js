@@ -3,25 +3,24 @@ const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
+const rateLimiter = require('./middlewares/rateLimit');
 const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { errorHandler } = require('./middlewares/errorHandler');
-const { loginValidation, userValidation } = require('./middlewares/validate');
-const { login, createUser } = require('./controllers/users');
+const { MONGO_DB_ADDRESS, SERVER_PORT } = require('./utils/constants');
 
-const { PORT = 3000 } = process.env;
+const { PORT = SERVER_PORT } = process.env;
 const app = express();
 
 app.use(helmet());
+app.use(rateLimiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb');
+mongoose.connect(MONGO_DB_ADDRESS);
 
 app.use(requestLogger);
 
-router.post('/signin', loginValidation, login);
-router.post('/signup', userValidation, createUser);
 app.use('/', router);
 
 app.use(errorLogger);

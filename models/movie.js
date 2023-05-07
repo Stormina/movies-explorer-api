@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { isURL } = require('validator');
+const { BAD_REQUEST_ERROR } = require('../utils/constants');
 
 const movieSchema = new mongoose.Schema({
   country: {
@@ -29,7 +30,7 @@ const movieSchema = new mongoose.Schema({
       validator(link) {
         return isURL(link);
       },
-      message: 'Переданы некорректные данные',
+      message: BAD_REQUEST_ERROR,
     },
   },
   trailerLink: {
@@ -39,7 +40,7 @@ const movieSchema = new mongoose.Schema({
       validator(link) {
         return isURL(link);
       },
-      message: 'Переданы некорректные данные',
+      message: BAD_REQUEST_ERROR,
     },
   },
   thumbnail: {
@@ -49,7 +50,7 @@ const movieSchema = new mongoose.Schema({
       validator(link) {
         return isURL(link);
       },
-      message: 'Переданы некорректные данные',
+      message: BAD_REQUEST_ERROR,
     },
   },
   owner: {
@@ -57,11 +58,10 @@ const movieSchema = new mongoose.Schema({
     ref: 'user',
     required: true,
   },
-  movieId: {
-    type: mongoose.Schema.Types.ObjectId,
-    /* ref: 'user', */
+  /* movieId: {
+    type: Number,
     required: true,
-  },
+  }, */
   nameRU: {
     type: String,
     required: true,
