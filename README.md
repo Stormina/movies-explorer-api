@@ -5,11 +5,9 @@
 
 ## Ссылки на проект:
 
-IP 
+IP 158.160.0.135
 
-Frontend https://stormina.students.nomoredomains.monster/
-
-Backend https://api.stormina.students.nomoredomains.monster/
+Backend https://movies.students.nomoredomains.monster
 
 ## Используемые технологии
 

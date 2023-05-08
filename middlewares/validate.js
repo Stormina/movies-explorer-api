@@ -31,12 +31,6 @@ module.exports.movieIdValidation = celebrate({
   }),
 });
 
-module.exports.userIdValidation = celebrate({
-  params: Joi.object().keys({
-    _id: Joi.string().length(24).hex().required(),
-  }),
-});
-
 module.exports.patchValidation = celebrate({
   body: Joi.object().keys({
     _id: Joi.string().length(24).hex().required(),
