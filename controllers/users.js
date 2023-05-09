@@ -4,13 +4,12 @@ const mongoose = require('mongoose');
 const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
-const UnauthorizedError = require('../errors/UnauthorizedError');
 const ConflictRequestError = require('../errors/ConflictRequestError');
 const {
   NOT_FOUND_ERROR,
   BAD_REQUEST_ERROR,
-  UN_AUTH_ERROR,
   CONFLICT_REQUEST_ERROR,
+  AUTH_ERROR,
 } = require('../utils/constants');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
@@ -61,8 +60,10 @@ module.exports.patchUser = (req, res, next) => {
       res.send(user);
     })
     .catch((err) => {
-      if (err instanceof mongoose.Error.ValidationError) {
-        next(new BadRequestError(BAD_REQUEST_ERROR));
+      if (err.code === 11000) {
+        next(new ConflictRequestError(CONFLICT_REQUEST_ERROR));
+      } else if (err instanceof mongoose.Error.ValidationError) {
+        next(new BadRequestError(AUTH_ERROR));
       } else next(err);
     });
 };
@@ -79,9 +80,6 @@ module.exports.login = (req, res, next) => {
       );
 
       res.send({ token });
-    })
-    .catch(() => {
-      next(new UnauthorizedError(UN_AUTH_ERROR));
     })
     .catch(next);
 };
