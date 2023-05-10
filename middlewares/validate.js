@@ -26,14 +26,14 @@ module.exports.userValidation = celebrate({
 });
 
 module.exports.movieIdValidation = celebrate({
-  body: Joi.object().keys({
-    _id: Joi.string().length(24).hex().required(),
+  params: Joi.object().keys({
+    id: Joi.string().length(24).hex().required(),
   }),
 });
 
 module.exports.patchValidation = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
+    name: Joi.string().required().min(2).max(30),
     email: Joi.string().required().email(),
   }),
 });
@@ -48,7 +48,6 @@ module.exports.movieValidation = celebrate({
     image: Joi.string().required().custom(validate),
     trailerLink: Joi.string().required().custom(validate),
     thumbnail: Joi.string().required().custom(validate),
-    owner: Joi.string().length(24).hex(),
     movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),

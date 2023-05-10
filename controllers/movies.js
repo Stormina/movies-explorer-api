@@ -3,11 +3,15 @@ const Movie = require('../models/movie');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 const ForbiddenError = require('../errors/ForbiddenError');
-const { BAD_REQUEST_ERROR, FORBIDDEN_ERROR, NOT_FOUND_ERROR } = require('../utils/constants');
+const {
+  BAD_REQUEST_ERROR,
+  FORBIDDEN_ERROR,
+  FILM_NOT_FOUND_ERROR,
+} = require('../utils/constants');
 
 module.exports.getAllMovies = (req, res, next) => {
-  const userId = req.params._id;
-  Movie.find({ userId })
+  const owner = req.user._id;
+  Movie.find({ owner })
     .then((movies) => res.send(movies))
     .catch(next);
 };
@@ -50,10 +54,10 @@ module.exports.createMovie = (req, res, next) => {
 };
 
 module.exports.deleteMovie = (req, res, next) => {
-  Movie.findById(req.body._id)
+  Movie.findById(req.params.id)
     .then((movie) => {
       if (!movie) {
-        throw new NotFoundError(NOT_FOUND_ERROR);
+        throw new NotFoundError(FILM_NOT_FOUND_ERROR);
       }
       if (!movie.owner.equals(req.user._id)) {
         throw new ForbiddenError(FORBIDDEN_ERROR);

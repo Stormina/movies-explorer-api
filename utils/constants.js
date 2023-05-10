@@ -2,7 +2,8 @@ const MONGO_DB_ADDRESS = 'mongodb://127.0.0.1:27017/bitfilmsdb';
 const SERVER_PORT = 3000;
 
 const BAD_REQUEST_ERROR = 'Переданы некорректные данные';
-const NOT_FOUND_ERROR = 'Пользователь не найдена';
+const NOT_FOUND_ERROR = 'Пользователь не найден';
+const FILM_NOT_FOUND_ERROR = 'Фильм не найден';
 const URL_NOT_FOUND_ERROR = 'Страница не найдена';
 const FORBIDDEN_ERROR = 'Доступ запрещен';
 const AUTH_ERROR = 'Неправильные почта или пароль';
@@ -23,4 +24,5 @@ module.exports = {
   UNCORRECT_URL_ERROR,
   URL_NOT_FOUND_ERROR,
   AUTH_ERROR,
+  FILM_NOT_FOUND_ERROR,
 };

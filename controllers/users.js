@@ -9,7 +9,6 @@ const {
   NOT_FOUND_ERROR,
   BAD_REQUEST_ERROR,
   CONFLICT_REQUEST_ERROR,
-  AUTH_ERROR,
 } = require('../utils/constants');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
@@ -63,7 +62,7 @@ module.exports.patchUser = (req, res, next) => {
       if (err.code === 11000) {
         next(new ConflictRequestError(CONFLICT_REQUEST_ERROR));
       } else if (err instanceof mongoose.Error.ValidationError) {
-        next(new BadRequestError(AUTH_ERROR));
+        next(new BadRequestError(BAD_REQUEST_ERROR));
       } else next(err);
     });
 };

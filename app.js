@@ -9,14 +9,14 @@ const rateLimiter = require('./middlewares/rateLimit');
 const { errorHandler } = require('./middlewares/errorHandler');
 const { MONGO_DB_ADDRESS, SERVER_PORT } = require('./utils/constants');
 
-const { PORT = SERVER_PORT } = process.env;
+const { PORT = SERVER_PORT, ADDRESS = MONGO_DB_ADDRESS } = process.env;
 const app = express();
 
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect(MONGO_DB_ADDRESS);
+mongoose.connect(ADDRESS);
 
 app.use(requestLogger);
 app.use(rateLimiter);
