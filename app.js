@@ -21,7 +21,7 @@ mongoose.connect(ADDRESS);
 app.use(requestLogger);
 app.use(rateLimiter);
 
-app.use('/', router);
+app.use('/api', router);
 
 app.use(errorLogger);
 app.use(errors());
