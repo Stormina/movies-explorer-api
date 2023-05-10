@@ -7,7 +7,7 @@
 
 IP 158.160.0.135
 
-Backend https://movies.students.nomoredomains.monster
+Backend https://movies.students.nomoredomains.monster/api
 
 ## Используемые технологии
 
