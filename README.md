@@ -5,7 +5,7 @@
 
 ## Ссылки на проект:
 
-IP 158.160.0.135
+IP 158.160.28.110
 
 Backend https://movies.students.nomoredomains.monster/api
 
