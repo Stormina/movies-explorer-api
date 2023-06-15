@@ -1,5 +1,4 @@
 require('dotenv').config();
-const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
@@ -12,7 +11,6 @@ const { MONGO_DB_ADDRESS, SERVER_PORT } = require('./utils/constants');
 
 const { PORT = SERVER_PORT, ADDRESS = MONGO_DB_ADDRESS } = process.env;
 const app = express();
-app.use(cors());
 
 app.use(helmet());
 app.use(express.json());
