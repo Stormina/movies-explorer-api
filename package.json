@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/Stormina/movies-explorer-api/issues"
   },
-  "homepage": "https://github.com/Stormina/movies-explorer-api#readme",
+  "homepage": "https://movies.students.nomoredomains.monster/",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "celebrate": "^15.0.1",
